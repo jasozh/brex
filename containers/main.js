@@ -18,8 +18,22 @@ container.y = app.screen.height / 2;
 container.pivot.x = container.width / 2;
 container.pivot.y = container.height / 2;
 
+// Add player sprite
+const player = new PIXI.Sprite.from('assets/player.png')
+
+// Set initial position of player
+player.anchor.set(0.5);
+player.x = app.view.width / 2
+player.y = app.view.height / 2
+
+app.stage.addChild(player)
+
+//keyboard event handlers
+window.addEventListener("keydown", keysDown)
+window.addEventListener("keyup", keysUP)
+
 // Add interactive box
-const sprite = PIXI.Sprite.from('assets/test-asset.png');
+const sprite = newPIXI.Sprite.from('assets/test-asset.png');
 
 // Set the initial position
 sprite.anchor.set(0.5);
