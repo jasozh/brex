@@ -17,6 +17,7 @@ container.y = app.screen.height / 2;
 // Center bunny sprite in local container coordinates
 container.pivot.x = container.width / 2;
 container.pivot.y = container.height / 2;
+//------------------------------------------------------------------------------------------------------------
 
 // Add player sprite
 const player = new PIXI.Sprite.from('assets/player.png')
@@ -29,9 +30,46 @@ player.y = app.view.height / 2
 app.stage.addChild(player)
 
 //keyboard event handlers
-window.addEventListener("keydown", keysDown)
-window.addEventListener("keyup", keysUP)
+window.addEventListener("keydown", keysDown);
+window.addEventListener("keyup", keysUp)
 
+app.ticker.add(gameLoop);
+
+keysDiv = document.querySelector("#keys");
+
+let keys = {};
+
+function keysDown(e) {
+    console.log(e.keyCode);
+    keys[e.keycode] = true;
+}
+
+function keysUp(e) {
+    console.log(e.keyCode);
+    keys[e.keycode] = false;
+}
+
+function gameloop() {
+    keysDiv.innerHTML = JSON.stringify(keys);
+    //W
+    if (keys["87"]){
+        player.y += 5;
+    }
+    //A
+    if (keys["65"]){
+        player.x -= 5;
+    }
+    //S
+    if (keys["83"]){
+        player.y -= 5;
+    }
+    //D
+    if (keys["68"]){
+        player.x += 5;
+    }
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 // Add interactive box
 const sprite = newPIXI.Sprite.from('assets/test-asset.png');
 
