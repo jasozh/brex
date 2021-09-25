@@ -1,18 +1,8 @@
+const B = new Bump(PIXI);
+
 var canv = document.createElement("canvas");
 
-//get DPI
-let dpi = window.devicePixelRatio;//get canvas
-
-function fix_dpi() {
-    //get CSS height
-    //the + prefix casts it to an integer
-    //the slice method gets rid of "px"
-    let style_height = +getComputedStyle(canv).getPropertyValue("height").slice(0, -2);//get CSS width
-    let style_width = +getComputedStyle(canv).getPropertyValue("width").slice(0, -2);//scale the canv
-
-    canv.setAttribute('height', style_height * dpi);
-    canv.setAttribute('width', style_width * dpi);
-}
+var DATA = undefined;
 
 // Initialize application
 const app = new PIXI.Application({
@@ -20,17 +10,25 @@ const app = new PIXI.Application({
 });
 
 app.ticker.maxFPS = 120;
-app.ticker.add(()=>{
-    fix_dpi();
-})
-
 
 document.getElementById("game").appendChild(app.view)
 
-const map = new Map(app);
+let map, player;
 
-map.load('./assets/maps/highrise/back.png')
-const player = new Player(map, "./assets/player.png");
+async function init() {
+    DATA = await fetch('/assets/data.json')
+        .then(r => r.json());
+
+    map = new Map(app);
+
+    map.load('highrise');
+
+    player = new Player(map, 30, 30, "./assets/player.png");
+}
+
+init();
+
+
 
 var keyspressed = {};
 
